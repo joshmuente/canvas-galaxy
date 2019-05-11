@@ -32,7 +32,7 @@ class Galaxy {
         this.ctx.lineWidth = 1;
 
         for (var i = 0; i < this.num_star; i++) {
-            var star = new Star(Math.random() * this.canvas_width, Math.random() * this.canvas_height, this.getRndColor());
+            var star = new Star(Math.random() * this.canvas_width, Math.random() * this.canvas_height);
             this.star_array.push(star);
         }
 
@@ -87,21 +87,21 @@ class Galaxy {
         this.mouse.x = e.clientX;
         this.mouse.y = e.clientY;
     }
-
-    // thanks to https://stackoverflow.com/questions/22237497/draw-a-circle-filled-with-random-color-sqares-on-canvas
-    getRndColor() {
-        var r = 255*Math.random()|0,
-            g = 255*Math.random()|0,
-            b = 255*Math.random()|0;
-        return 'rgb(' + r + ',' + g + ',' + b + ')';
-    }
 }
 
 class Star {
     constructor(x, y, color) {
         this.x = x;
         this.y = y;
-        this.color = color;
+        this.color =  this.getRndColor();
+    }
+
+     // thanks to https://stackoverflow.com/questions/22237497/draw-a-circle-filled-with-random-color-sqares-on-canvas
+    getRndColor() {
+        var r = 255*Math.random()|0,
+            g = 255*Math.random()|0,
+            b = 255*Math.random()|0;
+        return 'rgb(' + r + ',' + g + ',' + b + ')';
     }
 }
 
