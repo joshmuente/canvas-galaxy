@@ -1,5 +1,6 @@
 class Galaxy {
     constructor() {
+	this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         this.canvas;
         this.ctx;
         this.canvas_height = window.innerHeight;
@@ -39,9 +40,12 @@ class Galaxy {
         document.addEventListener("mousedown", this.mousedown_handler.bind(this));
         document.addEventListener("mouseup", this.mouseup_handler.bind(this));
         document.addEventListener("mousemove", this.mousemove_handler.bind(this));
+
         document.addEventListener("touchstart", this.mousedown_handler.bind(this));
         document.addEventListener("touchend", this.mouseup_handler.bind(this));
-        document.addEventListener("touchmove", this.mousemove_handler.bind(this));
+	if(this.isMobile) {
+	        document.addEventListener("touchmove", this.mousemove_handler.bind(this));
+	}
 
         this.draw();
     }
@@ -72,7 +76,7 @@ class Galaxy {
                     this.ctx.lineTo(star.x + xdelta / this.star_length, star.y + ydelta / this.star_length);
                 }
             }
-        }   
+        }
 
         this.ctx.stroke();
         requestAnimationFrame(this.draw.bind(this));
@@ -87,6 +91,11 @@ class Galaxy {
     }
 
     mousemove_handler(e) {
+	e.preventDefault();
+	if(this.isMobile) {
+		var touch = e.changedTouches[0];
+		e = touch;
+	}
         this.mouse.x = e.clientX;
         this.mouse.y = e.clientY;
     }
