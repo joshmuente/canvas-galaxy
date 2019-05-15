@@ -1,6 +1,6 @@
 class Galaxy {
     constructor() {
-        this.canvas; 
+        this.canvas;
         this.ctx;
         this.canvas_height = window.innerHeight;
         this.canvas_width =  window.innerWidth;
@@ -21,7 +21,7 @@ class Galaxy {
         this.init();
     }
 
-    init () {
+    init() {
         this.canvas = document.getElementById("c");
         this.ctx = this.canvas.getContext("2d");
 
@@ -39,18 +39,21 @@ class Galaxy {
         document.addEventListener("mousedown", this.mousedown_handler.bind(this));
         document.addEventListener("mouseup", this.mouseup_handler.bind(this));
         document.addEventListener("mousemove", this.mousemove_handler.bind(this));
+        document.addEventListener("touchstart", this.mousedown_handler.bind(this));
+        document.addEventListener("touchend", this.mouseup_handler.bind(this));
+        document.addEventListener("touchmove", this.mousemove_handler.bind(this));
 
         this.draw();
     }
 
-    draw () {
+    draw() {
         this.ctx.clearRect(0, 0, this.canvas_width, this.canvas_height);
         var random = function () { return Math.random() * 2 - 1 };
+        this.ctx.beginPath();
 
         for (let i = 0; i < this.star_array.length; i++) {
-            this.ctx.beginPath();
             var star = this.star_array[i];
-            this.ctx.strokeStyle = star.color;
+            //this.ctx.strokeStyle = star.color;
 
             if (star.x > this.canvas_width || star.x < 0 || star.y > this.canvas_height || star.y < 0) {
                star.x = Math.random() * this.canvas_width;
@@ -69,9 +72,9 @@ class Galaxy {
                     this.ctx.lineTo(star.x + xdelta / this.star_length, star.y + ydelta / this.star_length);
                 }
             }
-            this.ctx.stroke();
         }   
 
+        this.ctx.stroke();
         requestAnimationFrame(this.draw.bind(this));
     }
 
